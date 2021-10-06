@@ -43,7 +43,7 @@ export class HTTPParser extends Parser {
         this.parseVariables();
         console.log(this.request);
         console.log(this.request.getRequestAsHttp());
-        netConnection();
+        netConnection(this.request);
     }
 
     private parseVariables() {

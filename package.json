@@ -20,7 +20,7 @@
     "posttest": "npm.cmd run lint",
     "sock": "npm.cmd run prepare && node build/src/sock.js",
     "net": "npm.cmd run prepare && node build/src/net.js",
-    "start": "npm run prepare && node build/src/index.js get -p 92"
+    "start": "npm run prepare && node build/src/index.js get -p 80"
   },
   "devDependencies": {
     "gts": "^3.1.0",

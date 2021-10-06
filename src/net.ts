@@ -2,11 +2,8 @@ import { createConnection } from "net";
 import { Request } from "./model/request";
 
 
-export function netConnection() {
+export function netConnection(request:Request) {
   console.log('arguments', process.argv);
-
-  let request!: Request;
-  request = new Request();
   const client = createConnection(request.port, request.host);
 
 
