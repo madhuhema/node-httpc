@@ -1,12 +1,13 @@
 import { createConnection } from "net";
+import { Request } from "./model/request";
 
 console.log('arguments', process.argv);
 
-let request: string =
-`GET /get?course=networking&assignment=1 HTTP/1.1
-Host: httpbin.org
+let request!: Request;
+// `GET /get?course=networking&assignment=1 HTTP/1.1
+// Host: httpbin.org
 
-`;
+// `;
 
 const client = createConnection(80, 'httpbin.org');
 
@@ -18,7 +19,7 @@ client.on('data', buf => {
 client.on('connect', () => {
     console.log('connected to server');
     console.log('sending request');
-    client.write(request);
+    client.write(request.getRequestAsHttp());
 })
 
 client.on('error', err => {

@@ -10,6 +10,7 @@ export class Request {
     public host!: string;
     public url!: string;
     public path!: string;
+    public queryParams!: any;
     public port: number = 80;
     public method!: Method;
     public headers: Map<string, string> = new Map();
@@ -32,6 +33,7 @@ export class Request {
         }
         request = this.setMethod(request, this.method);
         request = this.setHeaderTemplate(request);
+        request = this.setURL(request, this.url);
         this.request = request;
     }
 
@@ -54,5 +56,9 @@ export class Request {
         return template;
     }
 
+    private setURL(template: string, url: string): string {
+        template = template.replace('%URL%', url);
+        return template;
+    }
 
 }

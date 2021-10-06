@@ -1,4 +1,5 @@
 import { readFileSync } from "fs";
+import { URL } from "url";
 import { ErrorCodes } from "./errorcodes";
 import { getMethodArray, getMethodByName, Method } from "./method";
 import { Request } from "./request";
@@ -60,9 +61,12 @@ export class HTTPParser extends Parser {
                 this.request.body = readFileSync(arr[i + 1]).toString("utf-8");
             }
             if (command.indexOf('http:') === 0) {
+                let http = new URL(command);
                 this.request.url = command;
-                this.request.host =
-                this.request.path =
+                this.request.host = http.hostname;
+                this.request.path = http.pathname.substring(1);
+                this.request.queryParams = http.searchParams;
+                console.log(this.request);
             }
             if (command === "-p") {
                 this.request.port = parseInt(arr[i + 1]);
