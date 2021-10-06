@@ -34,6 +34,7 @@ export class Request {
         request = this.setMethod(request, this.method);
         request = this.setHeaderTemplate(request);
         request = this.setURL(request, this.url);
+        request = this.setHost(request, this.host);
         this.request = request;
     }
 
@@ -61,4 +62,8 @@ export class Request {
         return template;
     }
 
+    private setHost(template: string, host: string): string {
+        template = template.replace('%HOST%', host);
+        return template;
+    }
 }

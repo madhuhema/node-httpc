@@ -62,9 +62,9 @@ export class HTTPParser extends Parser {
             }
             if (command.indexOf('http:') === 0) {
                 let http = new URL(command);
-                this.request.url = command;
                 this.request.host = http.hostname;
                 this.request.path = http.pathname.substring(1);
+                this.request.url = http.pathname + http.search;
                 this.request.queryParams = http.searchParams;
                 console.log(this.request);
             }

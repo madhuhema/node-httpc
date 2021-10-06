@@ -9,7 +9,7 @@ let request!: Request;
 
 // `;
 
-const client = createConnection(80, 'httpbin.org');
+const client = createConnection(request.port, request.host);
 
 
 client.on('data', buf => {
