@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 import { URL } from "url";
+import { netConnection } from "../net";
 import { ErrorCodes } from "./errorcodes";
 import { getMethodArray, getMethodByName, Method } from "./method";
 import { Request } from "./request";
@@ -42,6 +43,7 @@ export class HTTPParser extends Parser {
         this.parseVariables();
         console.log(this.request);
         console.log(this.request.getRequestAsHttp());
+        netConnection();
     }
 
     private parseVariables() {
@@ -62,9 +64,10 @@ export class HTTPParser extends Parser {
             }
             if (command.indexOf('http:') === 0) {
                 let http = new URL(command);
+                this.request.url = command;
                 this.request.host = http.hostname;
                 this.request.path = http.pathname.substring(1);
-                this.request.url = http.pathname + http.search;
+                this.request.queryPath= http.pathname + http.search;
                 this.request.queryParams = http.searchParams;
                 console.log(this.request);
             }

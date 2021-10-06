@@ -10,6 +10,7 @@ export class Request {
     public host!: string;
     public url!: string;
     public path!: string;
+    public queryPath!: string;
     public queryParams!: any;
     public port: number = 80;
     public method!: Method;
@@ -33,7 +34,7 @@ export class Request {
         }
         request = this.setMethod(request, this.method);
         request = this.setHeaderTemplate(request);
-        request = this.setURL(request, this.url);
+        request = this.setQueryPath(request, this.queryPath);
         request = this.setHost(request, this.host);
         this.request = request;
     }
@@ -57,8 +58,8 @@ export class Request {
         return template;
     }
 
-    private setURL(template: string, url: string): string {
-        template = template.replace('%URL%', url);
+    private setQueryPath(template: string, queryPath: string): string {
+        template = template.replace('%QUERYPATH%', queryPath);
         return template;
     }
 
