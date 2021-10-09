@@ -1,4 +1,5 @@
-import { existsSync } from "fs";
+import { existsSync, writeFileSync } from "fs";
+import { Logger } from "../utils/logger";
 import { ErrorCodes } from "./errorcodes";
 import { getMethodArray } from "./method";
 
@@ -11,7 +12,6 @@ export class HTTPValidator implements Validator {
         let errors: ErrorCodes[] = []
         let methodAvailable = 0;
         let urlAvailable = 0;
-        console.log(commandArr);
         commandArr.forEach((command, i, arr) => {
             // check if it has HTTP method
             if (getMethodArray().includes(command.toLowerCase())) {
@@ -45,6 +45,14 @@ export class HTTPValidator implements Validator {
                 errors.push(ErrorCodes.NOFILE);
             }
 
+            if (command === "-o" && arr.length <= i) {
+                errors.push(ErrorCodes.NOOUTPUTFILE)
+            }
+
+            if (command === "-o" && !this.validateOutputPath(arr[i + 1])) {
+                errors.push(ErrorCodes.NOTVALIDOUTPUTPATH)
+            }
+
             if (command.indexOf('http:') === 0) {
                 urlAvailable++;
             }
@@ -60,6 +68,16 @@ export class HTTPValidator implements Validator {
         if (urlAvailable == 0) errors.push(ErrorCodes.NOURL);
         if (urlAvailable > 1) errors.push(ErrorCodes.TOOMANYURL)
         return errors;
+    }
+    validateOutputPath(path: string) {
+        try {
+            writeFileSync(path, '');
+            return this.validatePath(path);
+        } catch (err) {
+            const log = Logger.getInstance();
+            log.debug(err);
+            return false;
+        }
     }
 
     private validateBody(command: string): boolean {
@@ -89,13 +107,24 @@ export class HTTPValidator implements Validator {
             return false;
         }
         // should have a colon
-        if (command.indexOf(":") < 0 || command.indexOf(":") === command.lastIndexOf(":")) {
+        if (command.indexOf(":") < 0 || command.indexOf(":") !== command.lastIndexOf(":")) {
             return false;
         }
         let [key, value] = command.split(":");
         if (key.endsWith("-")) return false;
 
         return true;
+    }
+
+    public static isVerbose(commandArr: string[]) {
+        if (commandArr.includes("-v") || commandArr.includes("--verbose")) {
+            return '1';
+        }
+        return '0';
+    }
+
+    static isHelper(commandArr: string[]) {
+        return commandArr.indexOf("help");
     }
 }
 

@@ -1,7 +1,10 @@
 {
-  "name": "httpc",
-  "version": "0.0.0",
+  "name": "sudharsan-httpc",
+  "version": "0.0.3",
   "description": "",
+  "bin": {
+    "httpc": "build/src/index.js"
+  },
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "files": [
@@ -18,9 +21,12 @@
     "prepare": "npm.cmd run compile",
     "pretest": "npm.cmd run compile",
     "posttest": "npm.cmd run lint",
-    "sock": "npm.cmd run prepare && node build/src/sock.js",
     "net": "npm.cmd run prepare && node build/src/net.js",
-    "start": "npm run prepare && node build/src/index.js get -p 80"
+    "start": "npm run prepare && node build/src/index.js get -p 80",
+    "post": "npm run prepare && node build/src/index.js -p 80 post -h Content-Type:application/json -d {'Assignment': 1} http://httpbin.org/post",
+    "postByFile": "npm run prepare && node build/src/index.js -p 80 post -h Content-Type:application/json -f C:\\projects\\node-httpc\\input.json http://httpbin.org/post",
+    "redirect": "npm run prepare && node build/src/index.js get http://rml.lu/MQvh7V",
+    "httpc": "httpc -p 80 post -h Content-Type:application/json -d {'Assignment': 1} http://httpbin.org/post"
   },
   "devDependencies": {
     "gts": "^3.1.0",

@@ -8,5 +8,7 @@ export enum ErrorCodes {
     NOURL = 'please provide the host address url',
     TOOMANYURL = 'please provide only one url',
     PORTNOTGIVEN = 'No port details provided',
-    PORTNAN = 'Port provided is not a number'
+    PORTNAN = 'Port provided is not a number',
+    NOOUTPUTFILE = 'No Output File mentioned with -o flag',
+    NOTVALIDOUTPUTPATH = "Check output file path mentioned"
 }

@@ -1,8 +1,9 @@
 import { readFileSync } from "fs";
 import { URL } from "url";
-import { netConnection } from "../net";
+import { Helper } from "../utils/helper";
+import { Logger } from "../utils/logger";
 import { ErrorCodes } from "./errorcodes";
-import { getMethodArray, getMethodByName, Method } from "./method";
+import { getMethodArray, getMethodByName } from "./method";
 import { Request } from "./request";
 import { Validator } from "./validator";
 
@@ -10,7 +11,7 @@ import { Validator } from "./validator";
 export class Parser {
     commandArr!: string[];
     request!: Request;
-    
+
     constructor(protected validator: Validator) {
 
     }
@@ -24,9 +25,14 @@ export class Parser {
     }
 
     private printErrorAndExit(errors: ErrorCodes[]) {
+        const log = Logger.getInstance();
+        log.group('Found Errors:');
         errors.forEach(error => {
-            console.log('*\t', error.toString());
+            log.info('*\t', error.toString());
         })
+        log.groupEnd();
+        log.info('refer this:');
+        Helper.printHelper();
         process.exit(0);
     }
 }
@@ -37,16 +43,15 @@ export class HTTPParser extends Parser {
         super(validator);
     }
 
-    parse() {
+    parse(): Request {
         super.parse();
         this.request = new Request();
         this.parseVariables();
-        console.log(this.request);
-        console.log(this.request.getRequestAsHttp());
-        netConnection(this.request);
+        return this.request;
     }
 
     private parseVariables() {
+        const log = Logger.getInstance();
         this.commandArr.forEach((command, i, arr) => {
             if (getMethodArray().includes(command.toLowerCase())) {
                 this.request.method = getMethodByName(command);
@@ -67,12 +72,15 @@ export class HTTPParser extends Parser {
                 this.request.url = command;
                 this.request.host = http.hostname;
                 this.request.path = http.pathname.substring(1);
-                this.request.queryPath= http.pathname + http.search;
+                this.request.queryPath = http.pathname + http.search;
                 this.request.queryParams = http.searchParams;
-                console.log(this.request);
+                log.debug('request object', this.request);
             }
             if (command === "-p") {
                 this.request.port = parseInt(arr[i + 1]);
+            }
+            if (command === "-o") {
+                process.env.outputPath = arr[i + 1];
             }
         })
     }

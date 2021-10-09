@@ -1,13 +1,11 @@
 export const requestWithoutBody = 
-` %METHOD% %QUERYPATH% HTTP/1.0
- Host: %HOST%
+`%METHOD% %QUERYPATH% HTTP/1.0
 %HEADERS%
 
 `;
 
 export const requestWithBody =
-` %METHOD% %QUERYPATH% HTTP/1.0
- Host: %HOST%
+`%METHOD% %QUERYPATH% HTTP/1.0
 %HEADERS%
 
 %BODY%

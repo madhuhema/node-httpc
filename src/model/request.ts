@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { Method } from "./method";
+import { getMethodByName, Method } from "./method";
 import { requestWithBody, requestWithoutBody } from "./requestTemplate";
 
 export class Request {
@@ -26,6 +26,7 @@ export class Request {
         let request: string = '';
         this.rqid = randomUUID();
         this.headers.set('rqid', this.rqid);
+        this.setHost(this.host);
         if (this.method === Method.GET || this.method === Method.DELETE) {
             request = requestWithoutBody;
         } else {
@@ -35,7 +36,6 @@ export class Request {
         request = this.setMethod(request, this.method);
         request = this.setHeaderTemplate(request);
         request = this.setQueryPath(request, this.queryPath);
-        request = this.setHost(request, this.host);
         this.request = request;
     }
 
@@ -63,8 +63,7 @@ export class Request {
         return template;
     }
 
-    private setHost(template: string, host: string): string {
-        template = template.replace('%HOST%', host);
-        return template;
+    private setHost(host: string) {
+        this.headers.set('Host', host);
     }
 }

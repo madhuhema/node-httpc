@@ -1,4 +1,6 @@
-import { HTTPParser } from "./model/parser";
-import { HTTPValidator } from "./model/validator";
+#! /usr/bin/env node
+import { Driver } from "./controller/driver";
+import { Helper } from "./utils/helper";
 
-new HTTPParser(new HTTPValidator()).parse();
+new Driver().init();
+// Helper.printHelper();
