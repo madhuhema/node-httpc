@@ -1,5 +1,5 @@
 {
-  "name": "sudharsan-httpc",
+  "name": "httpc",
   "version": "0.0.3",
   "description": "",
   "bin": {
@@ -22,7 +22,7 @@
     "pretest": "npm.cmd run compile",
     "posttest": "npm.cmd run lint",
     "net": "npm.cmd run prepare && node build/src/net.js",
-    "start": "npm run prepare && node build/src/index.js get -p 80",
+    "start": "npm run prepare && node build/src/index.js",
     "post": "npm run prepare && node build/src/index.js -p 80 post -h Content-Type:application/json -d {'Assignment': 1} http://httpbin.org/post",
     "postByFile": "npm run prepare && node build/src/index.js -p 80 post -h Content-Type:application/json -f C:\\projects\\node-httpc\\input.json http://httpbin.org/post",
     "redirect": "npm run prepare && node build/src/index.js get http://rml.lu/MQvh7V",

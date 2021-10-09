@@ -15,7 +15,7 @@ export function netConnection(request: Request): Promise<Response> {
         client.on('data', buf => {
             let response = Response.fromTemplate(buf.toString('utf-8'));
             response.copyFromRequest(request);
-            if (response.location.indexOf("https:") > 0) {
+            if (response.location?.indexOf("https:") > 0) {
                 log.debug('https port');
                 response.port = 443;
             }
