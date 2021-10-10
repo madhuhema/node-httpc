@@ -20,7 +20,7 @@ export class Driver {
             }
             return;
         }
-        // will store '1' or '0' instead of boolean. because process variables can be string
+        // will store '1' or '0' instead of boolean. because process variables will be string
         if (process.env.verbose !== '1') {
             process.env.verbose = HTTPValidator.isVerbose(process.argv);
         }

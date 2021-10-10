@@ -8,6 +8,7 @@ export class Response {
     location!: string;
     template!: string;
     port!: number;
+    body!: string;
 
     public static fromTemplate(template: string): Response {
         let response = new Response();
@@ -43,6 +44,7 @@ export class Response {
         this.port = request.port;
         this.method = request.method;
         this.headers = request.headers;
+        this.body = request.body;
         this.headers.delete('Host');
         // request.headers.forEach((value, key) => this.headers.set(key, value));
     }

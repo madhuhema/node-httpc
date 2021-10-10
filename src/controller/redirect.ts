@@ -22,6 +22,7 @@ export class Redirect {
         request.queryParams = url.searchParams;
         request.method = prevResponse.method;
         request.headers = prevResponse.headers;
+        request.body = prevResponse.body;
         const response: Response = await netConnection(request);
         this.logger.debug('redirect request', request);
         this.logger.debug('redirect template');

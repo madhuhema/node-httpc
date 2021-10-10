@@ -31,11 +31,12 @@ export class Helper {
     public static printHelper() {
         const log = Logger.getInstance();
         log.group('usage:');
-        log.info('node-httpc command [arguments]');
+        log.info('httpc command [arguments]');
         log.group('The commands are');
         Helper.help.forEach((value, key) => {
             log.info(`${key}:\t${value}\n`);
         });
+        log.info('Use "httpc help [command]" for more information about a command.');
         log.groupEnd();
         log.groupEnd();
     }
@@ -49,7 +50,6 @@ export class Helper {
         } else if (command == 'post' || command === 'put') {
             map = Helper.postFlags;
         } else {
-            log.info('wrong helper syntax')
             this.printHelper();
             return;
         }
@@ -67,7 +67,7 @@ export class Helper {
     }
 
     private static getUsage(map: Map<string, string>): string {
-        let usage = 'node-httpc ';
+        let usage = 'httpc ';
         map.forEach((value, key) => {
             usage += key + " ";
         });

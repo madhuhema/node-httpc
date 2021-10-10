@@ -13,7 +13,7 @@ export function netConnection(request: Request): Promise<Response> {
 
 
         client.on('data', buf => {
-            let response = Response.fromTemplate(buf.toString('utf-8'));
+            let response = Response.fromTemplate(buf.toString('utf-8')); //template to object
             response.copyFromRequest(request);
             if (response.location?.indexOf("https:") > 0) {
                 log.debug('https port');
@@ -25,7 +25,7 @@ export function netConnection(request: Request): Promise<Response> {
         client.on('connect', () => {
             log.debug('connected to server');
             log.debug('sending request');
-            client.write(request.getRequestAsHttp());
+            client.write(request.getRequestAsHttp()); //object to template
         })
 
         client.on('error', err => {

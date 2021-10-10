@@ -21,23 +21,21 @@ export class HTTPValidator implements Validator {
             // port
             if (command === "-p" && arr.length <= i) {
                 errors.push(ErrorCodes.PORTNOTGIVEN);
-            }
-            if (command === "-p" && !arr[i + 1].match(/[0-9]/g)) {
+            } else if (command === "-p" && !arr[i + 1].match(/[0-9]/g)) {
                 errors.push(ErrorCodes.PORTNAN)
             }
 
             // check headers
             if (command === "-h" && arr.length <= i) {
                 errors.push(ErrorCodes.HEADER);
-            }
-            if (command === "-h" && !this.validateHeader(arr[i + 1])) {
+            } else if (command === "-h" && !this.validateHeader(arr[i + 1])) {
                 errors.push(ErrorCodes.HEADER);
             }
 
+            //check body
             if (command === "-d" && arr.length <= i) {
                 errors.push(ErrorCodes.BODY);
-            }
-            if (command === "-d" && !this.validateBody(arr[i + 1])) {
+            } else if (command === "-d" && !this.validateBody(arr[i + 1])) {
                 errors.push(ErrorCodes.BODY);
             }
 
@@ -45,22 +43,20 @@ export class HTTPValidator implements Validator {
                 errors.push(ErrorCodes.NOFILE);
             }
 
+            //check outputfile
             if (command === "-o" && arr.length <= i) {
                 errors.push(ErrorCodes.NOOUTPUTFILE)
-            }
-
-            if (command === "-o" && !this.validateOutputPath(arr[i + 1])) {
+            } else if (command === "-o" && !this.validateOutputPath(arr[i + 1])) {
                 errors.push(ErrorCodes.NOTVALIDOUTPUTPATH)
             }
 
+            // http matcher
             if (command.indexOf('http:') === 0) {
                 urlAvailable++;
+                if (!command.match(this.httpMatcher)) {
+                    errors.push(ErrorCodes.URLMALFORMED);
+                }
             }
-
-            if (command.indexOf('http:') === 0 && !command.match(this.httpMatcher)) {
-                errors.push(ErrorCodes.URLMALFORMED);
-            }
-
         });
 
         if (methodAvailable == 0) errors.push(ErrorCodes.NOMETHOD);
@@ -99,9 +95,7 @@ export class HTTPValidator implements Validator {
 
     private validateHeader(command: string): boolean {
 
-        if (command.length < 3) {
-            return false;
-        }
+
         // should not be a flag
         if (command.charAt(0) === "-") {
             return false;
@@ -110,6 +104,8 @@ export class HTTPValidator implements Validator {
         if (command.indexOf(":") < 0 || command.indexOf(":") !== command.lastIndexOf(":")) {
             return false;
         }
+        if (command.split(":").length != 2)
+            return false;
         let [key, value] = command.split(":");
         if (key.endsWith("-")) return false;
 
