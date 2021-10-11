@@ -26,7 +26,6 @@ export class Request {
         let request: string = '';
         this.rqid = randomUUID();
         this.headers.set('rqid', this.rqid);
-        this.headers.set('Content-Length', '17');
         this.setHost(this.host);
         if (this.method === Method.GET || this.method === Method.DELETE) {
             request = requestWithoutBody;
@@ -51,6 +50,7 @@ export class Request {
 
     private setBody(template: string, body: string): string {
         template = template.replace('%BODY%', body);
+        this.headers.set('Content-Length', body.length.toString());
         return template;
     }
 

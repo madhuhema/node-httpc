@@ -1,4 +1,5 @@
 import { readFileSync } from "fs";
+import { exit } from "process";
 import { URL } from "url";
 import { Helper } from "../utils/helper";
 import { Logger } from "../utils/logger";
@@ -64,7 +65,12 @@ export class HTTPParser extends Parser {
             if (command === "-d") {
                 if (this.request.headers.has("Content-Type") &&
                     (this.request.headers.get("Content-Type")?.toLowerCase() == "application/json")) {
-                        this.request.body = JSON.stringify(JSON.parse(arr[i + 1].trim()));
+                        try {
+                            this.request.body = JSON.stringify(JSON.parse(arr[i + 1].trim()));
+                        } catch (err) {
+                            log.error('Not a valid JSON body provided');
+                            exit(0);
+                        }
                     } else {
                         this.request.body = arr[i + 1].trim();
                     }       
