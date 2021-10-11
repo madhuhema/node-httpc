@@ -7,7 +7,6 @@ export const requestWithoutBody =
 export const requestWithBody =
 `%METHOD% %QUERYPATH% HTTP/1.0
 %HEADERS%
-
 %BODY%
 
 `;

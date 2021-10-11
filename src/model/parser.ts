@@ -62,7 +62,12 @@ export class HTTPParser extends Parser {
                 this.request.headers.set(key, value);
             }
             if (command === "-d") {
-                this.request.body = arr[i + 1];
+                if (this.request.headers.has("Content-Type") &&
+                    (this.request.headers.get("Content-Type")?.toLowerCase() == "application/json")) {
+                        this.request.body = JSON.stringify(JSON.parse(arr[i + 1].trim()));
+                    } else {
+                        this.request.body = arr[i + 1].trim();
+                    }       
             }
             if (command === "-f") {
                 this.request.body = readFileSync(arr[i + 1]).toString("utf-8");

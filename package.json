@@ -23,7 +23,7 @@
     "posttest": "npm.cmd run lint",
     "net": "npm.cmd run prepare && node build/src/net.js",
     "start": "npm run prepare && node build/src/index.js",
-    "post": "npm run prepare && node build/src/index.js -p 80 post -h Content-Type:application/json -d {'Assignment': 1} http://httpbin.org/post",
+    "post": "npm run prepare && node build/src/index.js -p 80 post -h Content-Type:application/json -d \"{\"Assignment\": 1}\" http://httpbin.org/post",
     "postByFile": "npm run prepare && node build/src/index.js -p 80 post -h Content-Type:application/json -f C:\\projects\\node-httpc\\input.json http://httpbin.org/post",
     "redirect": "npm run prepare && node build/src/index.js get http://httpbin.org:80/status/301",
     "httpc": "httpc -p 80 post -h Content-Type:application/json -d {'Assignment': 1} http://httpbin.org/post"
