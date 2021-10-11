@@ -1,5 +1,5 @@
 {
-  "name": "httpc",
+  "name": "httpc-comp6461",
   "version": "0.0.1",
   "description": "httpc is a curl-like application but supports HTTP protocol only.",
   "bin": {
