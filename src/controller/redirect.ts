@@ -16,6 +16,7 @@ export class Redirect {
         let url = new URL(prevResponse.location);
         const request = new Request();
         request.host = url.host;
+        request.port = url.port == '' ? 80 : parseInt(url.port);
         request.url = url.host + url.pathname;
         request.path = url.pathname.substring(1);
         request.queryPath = url.pathname + url.search;
@@ -27,15 +28,15 @@ export class Redirect {
         this.logger.debug('redirect request', request);
         this.logger.debug('redirect template');
         this.logger.debug(request.getRequestAsHttp());
-        // redirection logic needs to be added here
-        // if (response.location && response.location.length > 0) {
-        //     try {
-        //         await new Redirect().init(response);
-        //         return;
-        //     } catch (err) {
-        //         this.logger.error(err);
-        //     }
-        // }
+        // if redirection has another redirection
+        if (response.location && response.location.length > 0) {
+            try {
+                await new Redirect().init(response);
+                return;
+            } catch (err) {
+                this.logger.error(err);
+            }
+        }
         // write response to file or console
         if (process.env.outputPath && process.env.outputPath.length > 0) {
             writeFileSync(process.env.outputPath, response.template);

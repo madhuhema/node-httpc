@@ -1,7 +1,7 @@
 {
   "name": "httpc",
-  "version": "0.0.3",
-  "description": "",
+  "version": "0.0.1",
+  "description": "httpc is a curl-like application but supports HTTP protocol only.",
   "bin": {
     "httpc": "build/src/index.js"
   },
@@ -25,13 +25,13 @@
     "start": "npm run prepare && node build/src/index.js",
     "post": "npm run prepare && node build/src/index.js -p 80 post -h Content-Type:application/json -d {'Assignment': 1} http://httpbin.org/post",
     "postByFile": "npm run prepare && node build/src/index.js -p 80 post -h Content-Type:application/json -f C:\\projects\\node-httpc\\input.json http://httpbin.org/post",
-    "redirect": "npm run prepare && node build/src/index.js get http://rml.lu/MQvh7V",
+    "redirect": "npm run prepare && node build/src/index.js get http://httpbin.org:80/status/301",
     "httpc": "httpc -p 80 post -h Content-Type:application/json -d {'Assignment': 1} http://httpbin.org/post"
   },
   "devDependencies": {
+    "@types/node": "^14.11.2",
     "gts": "^3.1.0",
-    "typescript": "^4.0.3",
-    "@types/node": "^14.11.2"
+    "typescript": "^4.0.3"
   },
   "dependencies": {
     "commander": "^8.2.0"

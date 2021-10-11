@@ -2,7 +2,7 @@ import { Logger } from "./logger";
 
 export class Helper {
 
-    private static description = "node-httpc is a curl-like application but supports HTTP protocol only."
+    private static description = "httpc is a curl-like application but supports HTTP protocol only."
 
     private static help: Map<string, string> = new Map([
         ['get', 'executes a HTTP GET request and prints the response.'],
@@ -10,22 +10,24 @@ export class Helper {
         ['help', 'prints this screen.']
     ])
     private static getFlags: Map<string, string> = new Map([
-        ['(get|delete)', ''],
+        ['(get|delete)', 'Get|Delete executes a HTTP GET|HTTP DELETE request for a given URL.'],
         ['-v', 'Prints the detail of the response such as protocol, status, and headers.'],
-        ['-h, --header <{key: value}>', ''],
-        ['-p, --port <number>', ''],
-        ['-o, --output <output>', ''],
-        ['(url)', '']
+        ['-h, --header <{key: value}>', `Associates headers to HTTP Request with the format 'key:value'.`],
+        // ['-p, --port <number>', ''],
+        ['-o, --output <output>', 'Writes the response to the specified file.'],
+        ['(url)', 'URL determines the targeted HTTP server.']
     ]);
 
     private static postFlags: Map<string, string> = new Map([
         ['(post|put)', ''],
         ['-v', 'Prints the detail of the response such as protocol, status, and headers.'],
-        ['-h, --header <{key: value}>', ''],
-        ['-p, --port <number>', ''],
-        ['(-d|-f) <text|filepath>', ''],
-        ['-o, --output <output>', ''],
-        ['(url)', '']
+        ['-h, --header <{key: value}>', `Associates headers to HTTP Request with the format 'key:value'.`],
+        // ['-p, --port <number>', ''],
+        ['-d <text>', 'Associates an inline data to the body HTTP POST request.'],
+        ['-f <filepath>', 'Associates the content of a file to the body HTTP POST request.'],
+        ['-o, --output <output>', 'Writes the response to the specified file.'],
+        ['(url)', 'URL determines the targeted HTTP server.'],
+        ['', 'Either [-d] or [-f] can be used but not both.']
     ]);
 
     public static printHelper() {

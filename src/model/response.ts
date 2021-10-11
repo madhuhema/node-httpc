@@ -41,7 +41,6 @@ export class Response {
     }
 
     public copyFromRequest(request: Request) {
-        this.port = request.port;
         this.method = request.method;
         this.headers = request.headers;
         this.body = request.body;

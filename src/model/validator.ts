@@ -1,7 +1,7 @@
 import { existsSync, writeFileSync } from "fs";
 import { Logger } from "../utils/logger";
 import { ErrorCodes } from "./errorcodes";
-import { getMethodArray } from "./method";
+import { getMethodArray, getMethodByName, Method } from "./method";
 
 export class HTTPValidator implements Validator {
 
@@ -12,10 +12,16 @@ export class HTTPValidator implements Validator {
         let errors: ErrorCodes[] = []
         let methodAvailable = 0;
         let urlAvailable = 0;
+        let bodyRequired = false;
+        let bodies = 0;
+
         commandArr.forEach((command, i, arr) => {
             // check if it has HTTP method
             if (getMethodArray().includes(command.toLowerCase())) {
                 methodAvailable++;
+                if(getMethodByName(command) === Method.POST || getMethodByName(command) === Method.PUT) {
+                    bodyRequired = true;
+                }
             }
 
             // port
@@ -33,6 +39,9 @@ export class HTTPValidator implements Validator {
             }
 
             //check body
+            if(command === "-d" || command === "-f") {
+                bodies++;
+            }
             if (command === "-d" && arr.length <= i) {
                 errors.push(ErrorCodes.BODY);
             } else if (command === "-d" && !this.validateBody(arr[i + 1])) {
@@ -62,7 +71,12 @@ export class HTTPValidator implements Validator {
         if (methodAvailable == 0) errors.push(ErrorCodes.NOMETHOD);
         if (methodAvailable > 1) errors.push(ErrorCodes.TOOMANYMETHODS);
         if (urlAvailable == 0) errors.push(ErrorCodes.NOURL);
-        if (urlAvailable > 1) errors.push(ErrorCodes.TOOMANYURL)
+        if (urlAvailable > 1) errors.push(ErrorCodes.TOOMANYURL);
+        if(bodyRequired){
+            if(bodies > 1) {
+                errors.push(ErrorCodes.TOOMANYBODIES);
+            }
+        }
         return errors;
     }
     validateOutputPath(path: string) {

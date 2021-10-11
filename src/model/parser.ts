@@ -71,6 +71,7 @@ export class HTTPParser extends Parser {
                 let http = new URL(command);
                 this.request.url = command;
                 this.request.host = http.hostname;
+                this.request.port = http.port == '' ? 80 : parseInt(http.port);
                 this.request.path = http.pathname.substring(1);
                 this.request.queryPath = http.pathname + http.search;
                 this.request.queryParams = http.searchParams;
