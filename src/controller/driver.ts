@@ -26,6 +26,7 @@ export class Driver {
         }
         const httpParser = new HTTPParser(new HTTPValidator());
         const request = httpParser.parse();
+        this.logger.debug('request template', request.getRequestAsHttp());
         const response: Response = await netConnection(request);
 
         // redirection logic needs to be added here
