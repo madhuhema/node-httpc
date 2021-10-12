@@ -34,6 +34,7 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
-    "commander": "^8.2.0"
+    "commander": "^8.2.0",
+    "httpc-comp6461": "^1.0.1"
   }
 }
