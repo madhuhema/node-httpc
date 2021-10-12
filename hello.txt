@@ -1,0 +1,22 @@
+HTTP/1.1 200 OK
+Date: Tue, 12 Oct 2021 02:05:39 GMT
+Content-Type: application/json
+Content-Length: 338
+Connection: close
+Server: gunicorn/19.9.0
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+
+{
+  "args": {
+    "assignment": "1", 
+    "course": "networking"
+  }, 
+  "headers": {
+    "Host": "httpbin.org", 
+    "Rqid": "5167f42e-fbbc-490d-b2a5-e4acb42b8b95", 
+    "X-Amzn-Trace-Id": "Root=1-6164ed73-654b04432a1252420714e8db"
+  }, 
+  "origin": "173.182.190.235", 
+  "url": "http://httpbin.org/get?course=networking&assignment=1"
+}
