@@ -1,6 +1,6 @@
 {
   "name": "httpc-comp6461",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "httpc is a curl-like application but supports HTTP protocol only.",
   "bin": {
     "httpc": "build/src/index.js"
