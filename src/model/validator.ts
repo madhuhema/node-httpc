@@ -60,7 +60,7 @@ export class HTTPValidator implements Validator {
             }
 
             // http matcher
-            if (command.indexOf('http:') === 0) {
+            if (command.indexOf('http:') === 0 || command.indexOf('https:') === 0) {
                 urlAvailable++;
                 if (!command.match(this.httpMatcher)) {
                     errors.push(ErrorCodes.URLMALFORMED);
@@ -73,6 +73,9 @@ export class HTTPValidator implements Validator {
         if (urlAvailable == 0) errors.push(ErrorCodes.NOURL);
         if (urlAvailable > 1) errors.push(ErrorCodes.TOOMANYURL);
         if(bodyRequired){
+            if(bodies == 0) {
+                errors.push(ErrorCodes.NOBODY);
+            }
             if(bodies > 1) {
                 errors.push(ErrorCodes.TOOMANYBODIES);
             }

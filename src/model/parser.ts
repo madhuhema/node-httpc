@@ -65,20 +65,20 @@ export class HTTPParser extends Parser {
             if (command === "-d") {
                 if (this.request.headers.has("Content-Type") &&
                     (this.request.headers.get("Content-Type")?.toLowerCase() == "application/json")) {
-                        try {
-                            this.request.body = JSON.stringify(JSON.parse(arr[i + 1].trim()));
-                        } catch (err) {
-                            log.error('Not a valid JSON body provided');
-                            exit(0);
-                        }
-                    } else {
-                        this.request.body = arr[i + 1].trim();
-                    }       
+                    try {
+                        this.request.body = JSON.stringify(JSON.parse(arr[i + 1].trim()));
+                    } catch (err) {
+                        log.error('Not a valid JSON body provided');
+                        exit(0);
+                    }
+                } else {
+                    this.request.body = arr[i + 1].trim();
+                }
             }
             if (command === "-f") {
                 this.request.body = readFileSync(arr[i + 1]).toString("utf-8");
             }
-            if (command.indexOf('http:') === 0) {
+            if (command.indexOf('http:') === 0 || command.indexOf('https:') === 0) {
                 let http = new URL(command);
                 this.request.url = command;
                 this.request.host = http.hostname;

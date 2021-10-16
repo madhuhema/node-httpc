@@ -1,3 +1,4 @@
+import { timeStamp } from "console";
 import { writeFileSync } from "fs";
 import { netConnection } from "../model/net";
 import { HTTPParser } from "../model/parser";
@@ -24,11 +25,13 @@ export class Driver {
         if (process.env.verbose !== '1') {
             process.env.verbose = HTTPValidator.isVerbose(process.argv);
         }
+
+        process.env.verbose = '1';
         const httpParser = new HTTPParser(new HTTPValidator());
         const request = httpParser.parse();
         this.logger.debug('request template', request.getRequestAsHttp());
         const response: Response = await netConnection(request);
-
+        this.logger.debug("driver.ts received reponse:", response);
         // redirection logic needs to be added here
         if (response.location && response.location.length > 0) {
             await new Redirect().init(response);
@@ -36,8 +39,11 @@ export class Driver {
         }
         // write response to file or console
         if (process.env.outputPath && process.env.outputPath.length > 0) {
+            this.logger.info('writing to path', process.env.outputPath);
+            this.logger.debug(response.template);
             writeFileSync(process.env.outputPath, response.template);
         } else {
+            this.logger.info("received response...");
             this.logger.info(response.template);
         }
         return;

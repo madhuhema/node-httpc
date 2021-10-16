@@ -28,6 +28,7 @@ export class Redirect {
         this.logger.debug('redirect request', request);
         this.logger.debug('redirect template');
         this.logger.debug(request.getRequestAsHttp());
+        this.logger.debug("redirect.ts received reponse:", response);
         // if redirection has another redirection
         // if (response.location && response.location.length > 0) {
         //     try {
@@ -39,9 +40,10 @@ export class Redirect {
         // }
         // write response to file or console
         if (process.env.outputPath && process.env.outputPath.length > 0) {
+            this.logger.info('writing redirected response to path', process.env.outputPath);
             writeFileSync(process.env.outputPath, response.template);
         } else {
-            this.logger.info("Im in redirect");
+            this.logger.info("redirected response...");
             this.logger.info(response.template);
         }
         return;

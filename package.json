@@ -1,6 +1,6 @@
 {
   "name": "httpc-comp6461",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "description": "httpc is a curl-like application but supports HTTP protocol only.",
   "bin": {
     "httpc": "build/src/index.js"
@@ -18,10 +18,10 @@
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
-    "prepare": "npm.cmd run compile",
-    "pretest": "npm.cmd run compile",
-    "posttest": "npm.cmd run lint",
-    "net": "npm.cmd run prepare && node build/src/net.js",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run lint",
+    "net": "npm run prepare && node build/src/net.js",
     "start": "npm run prepare && node build/src/index.js",
     "post": "npm run prepare && node build/src/index.js -p 80 post -h Content-Type:application/json http://httpbin.org/post -d",
     "postByFile": "npm run prepare && node build/src/index.js -p 80 post -h Content-Type:application/json -f C:\\projects\\node-httpc\\input.json http://httpbin.org/post",
